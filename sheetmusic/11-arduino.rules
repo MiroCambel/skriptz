@@ -1,0 +1,1 @@
+SUBSYSTEMS=="usb", ATTRS{product}=="Arduino Uno", ATTRS{serial}=="85430353331351012091", ACTION=="add", ENV{SYSTEMD_WANTS}="sheetmusic.service", SYMLINK+="arduino", RUN+="/bin/bash -c '/home/miro/skriptz/display_cfg.sh'", MODE="0666"

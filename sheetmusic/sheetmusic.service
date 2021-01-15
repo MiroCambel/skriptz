@@ -1,0 +1,8 @@
+[Unit]
+Description=A program that helps you switch pages in .pdf files
+After=syslog.target
+
+[Service]
+Type=forking
+PIDFile=/tmp/sheetmusic.pid
+ExecStart=/home/miro/skriptz/sheetmusic/sheetmusic

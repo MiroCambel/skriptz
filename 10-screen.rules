@@ -1,0 +1,2 @@
+ACTION=="change", SUBSYSTEM=="drm", RUN+="/bin/bash -c '/home/miro/skriptz/display_cfg.sh'"
+

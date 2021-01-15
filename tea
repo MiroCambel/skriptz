@@ -1,0 +1,35 @@
+#!/usr/bin/python
+
+from sys import argv, stderr
+from tkinter import *
+from time import sleep
+from daemonize import Daemonize
+
+if len(argv) != 2:
+    print("usage: " + argv[0] + " <duration in minutes>", file=stderr)
+    exit(1)
+
+duration = 0
+
+try:
+    duration = int(argv[1])
+    if duration <= 0:
+        print("duration must be a positive integer", file=stderr)
+        exit(1)
+except:
+        print("duration must be a positive integer", file=stderr)
+        exit(1)
+
+pid = "/tmp/tea.pid"
+
+def main():
+    sleep(duration * 60)
+
+    root = Tk()
+    text = Text(root)
+    text.insert(INSERT, "Your tea is ready")
+    text.pack()
+    root.mainloop()
+
+daemon = Daemonize(app="tea", pid=pid, action=main)
+daemon.start()

@@ -1,0 +1,32 @@
+#!/usr/bin/python
+
+from daemonize import Daemonize
+from os import system
+import serial
+
+pid = "/tmp/sheetmusic.pid"
+arduino = "/dev/arduino"
+
+def main():
+    sp = serial.Serial(arduino)
+    sp.baudrate = 9600
+    sp.bytesize = 8
+    sp.parity   = 'N'
+    sp.stopbits = 1
+
+    try:
+        while True:
+            read_res = sp.read().decode()
+            if read_res not in ['l', 'h']:
+                sp.close()
+                system("/home/miro/skriptz/display_cfg.sh")
+                exit(1)
+            system("DISPLAY=:0 xdotool key " + read_res)
+            # system("echo " + read_res + " > /dev/pts/2")
+    except:
+        sp.close()
+        system("/home/miro/skriptz/display_cfg.sh")
+        exit(0) # disconnecting the device should cause this to exit normally
+
+daemon = Daemonize(app="sheetmusic", pid=pid, action=main)
+daemon.start()
